@@ -40,7 +40,7 @@ public class Game {
 			if ((i % 3) != 2){
 				System.out.printf("|");
 			}
-			if ((i % 3) == 0 && i != 0){
+			if (((i + 1) % 3) == 0 && i != 0){
 				System.out.println();
 				if (i < 8){
 				System.out.println("______");
@@ -48,16 +48,24 @@ public class Game {
 			}
 		}		
 	}
-	public void Move(int rank, int file){
+	public void Move(int square){
 		if (turn){ 						// turn being true means X to move
-			Xboard[rank][file] = true;
+			Xboard = Xboard | board[square];
 		}
 		else {
-			Oboard[rank][file] = true;
+			Oboard = Oboard | board[square];
 		}
 		turn = !turn;
 	}
-	public void detectWin(){ // probably could do this by pattern matching for speed, but im lazy
-		if boar
+	public boolean detectWin(){ // probably could do this by pattern matching for speed, but im lazy
+		for (int i = 0; i < 9; i++){
+			if ((Xboard & wins[i]) == wins[i]){
+				return true;
+			}
+			if ((Oboard & wins[i]) == wins[i]){
+				return true;
+			}
+		}
+		return false;
 	}
 }
