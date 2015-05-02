@@ -8,10 +8,12 @@ public class Game {
 	public Game(){
 		Xboard  = 0b000000000;
 		Oboard  = 0b000000000;
+		Init();
 	}
 	public Game(int X, int O){
 		Xboard = X;
 		Oboard = O;
+		Init();
 	}
 	public void Init(){
 		wins[0] = 0b111000000;
