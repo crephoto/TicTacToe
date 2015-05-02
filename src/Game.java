@@ -8,6 +8,12 @@ public class Game {
 	public Game(){
 		Xboard  = 0b000000000;
 		Oboard  = 0b000000000;
+	}
+	public Game(int X, int O){
+		Xboard = X;
+		Oboard = O;
+	}
+	public void Init(){
 		wins[0] = 0b111000000;
 		wins[1] = 0b000111000;
 		wins[2] = 0b000000111;
@@ -57,8 +63,12 @@ public class Game {
 		}
 		turn = !turn;
 	}
+	public int moveGen(){
+		return ~(Xboard | Oboard);
+		
+	}
 	public boolean detectWin(){ // probably could do this by pattern matching for speed, but im lazy
-		for (int i = 0; i < 9; i++){
+		for (int i = 0; i < 8; i++){
 			if ((Xboard & wins[i]) == wins[i]){
 				return true;
 			}
