@@ -1,48 +1,52 @@
 
 public class Game {
-	public boolean Xboard[][] = new boolean[3][3];
-	public boolean Oboard[][] = new boolean[3][3];
-	private boolean wins[][][] = new boolean[8][3][3];
+	public int Xboard;
+	public int Oboard;
+	public int board[] = new int[9];
+	private int wins[] = new int[8];
 	private boolean turn = true;
 	public Game(){
-		for (int i = 0; i < 3; i++){
-			for (int x = 0; x < 3; x++){
-				Xboard[i][x] = false;
-				Oboard[i][x] = false;
-				for (int y = 0; y < 8; y++){
-					wins[y][i][x] = false; // initalize win bitboards to false
-				}
-			}
-		}
-		for (int i = 0; i < 8; i++){
-			if (i < 3){ // the first three boards are horizontal / vertical wins
-				for 
-				wins[i][]
-			}
-		}
+		Xboard  = 0b000000000;
+		Oboard  = 0b000000000;
+		wins[0] = 0b111000000;
+		wins[1] = 0b000111000;
+		wins[2] = 0b000000111;
+		wins[3] = 0b100100100;
+		wins[4] = 0b010010010;
+		wins[5] = 0b001001001;
+		wins[6] = 0b100010001;
+		wins[7] = 0b001010100;
+		board[0] = 0b100000000;
+		board[1] = 0b010000000;
+		board[2] = 0b001000000;
+		board[3] = 0b000100000;
+		board[4] = 0b000010000;
+		board[5] = 0b000001000;
+		board[6] = 0b000000100;
+		board[7] = 0b000000010;
+		board[8] = 0b000000001;
 	}
 	public void Render(){
-		for (int i = 0; i < 3; i++){
-			for (int x = 0; x < 3; x++){
-				if (Xboard[i][x]){
-					System.out.printf("X");
-				}
-				else if (Oboard[i][x]){
-					System.out.printf("O");
-				}
-				else {
-					System.out.printf(" ");
-				}
-				if (x != 2){
-					System.out.printf("|");
-				}
+		for (int i = 0; i < 9; i++){
+			if ((board[i] & Xboard) == board[i]){
+				System.out.printf("X");
 			}
-			System.out.println();
-			if (i != 2){
+			else if ((board[i] & Oboard) == board[i]){
+				System.out.printf("O");
+			}
+			else {
+				System.out.printf(" ");
+			}
+			if ((i % 3) != 2){
+				System.out.printf("|");
+			}
+			if ((i % 3) == 0 && i != 0){
+				System.out.println();
+				if (i < 8){
 				System.out.println("______");
+				}
 			}
-			
-		}
+		}		
 	}
 	public void Move(int rank, int file){
 		if (turn){ 						// turn being true means X to move
