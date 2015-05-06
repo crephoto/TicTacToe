@@ -20,7 +20,7 @@ public class Minimax {
 //			} catch(InterruptedException ex) {
 //				Thread.currentThread().interrupt();
 //			}
-			if (! next_move.detectWin()){
+			if (! next_move.detectWin() && next_move.legal_moves().size() > 0){
 				Search(next_move, current_tree.tree.get(next_move));
 			}
 			if (next_move.detectWin() || next_move.legal_moves().size() == 0){
@@ -32,9 +32,8 @@ public class Minimax {
 	public int Traverse(Tree node, Game setup){
 		int Score = 0;
 		ArrayList<Integer> Scores = new ArrayList<>();
-		if (node.childrenCount == -1){
+		if (node.childrenCount == -1 || setup.detectWin()){
 			if (! setup.detectWin()){
-				System.out.println("No kids");
 				return 0;
 			}
 			else{
@@ -46,9 +45,10 @@ public class Minimax {
 				}
 			}
 		}
-		for (int i = 0; i < node.childrenCount; i++){
+		for (int i = 0; i <= node.childrenCount; i++){
 			Scores.add(Traverse(node.tree.get(node.children[i]), node.children[i]));
 		}
+		System.out.println(Scores);
 		for (int i = 0; i < Scores.size(); i++){
 			if (setup.turn){
 				if (Scores.get(i) > Score){
@@ -68,6 +68,26 @@ public class Minimax {
 		for (int i = 0; i <= tree.childrenCount; i++){
 			moves.put(i, Traverse(tree.tree.get(tree.children[i]), tree.children[i]));
 		}
+		boolean printed = false;
+		for (int i = 0; i < moves.size(); i++){
+			if (moves.get(i) == 1 && ! printed){
+				System.out.println("Searched " + Integer.toString(count) + " nodes and found a score of 1");
+				printed = true;
+			}
+		}
+		for (int i = 0; i < moves.size(); i++){
+			if (moves.get(i) == 0 && ! printed){
+				System.out.println("Searched " + Integer.toString(count) + " nodes and found a score of 0");
+				printed = true;
+			}
+		}
+		for (int i = 0; i < moves.size(); i++){
+			if (moves.get(i) == -1 && ! printed){
+				System.out.println("Searched " + Integer.toString(count) + " nodes and found a score of -1");
+				printed = true;
+			}
+		}
+		System.out.println(moves);
 		Game final_move = new Game();
 		for (int i = 0; i < moves.size(); i++){
 			if (moves.get(i) == -1){
