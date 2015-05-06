@@ -21,15 +21,15 @@ public class Minimax {
 			}
 			if (next_move.detectWin() || next_move.legal_moves().size() == 0){
 				count += 1;
-				System.out.println(count);
+	//			System.out.println(count);
 			}
 		}
 	}
 	public int Traverse(Tree node, Game setup){
 		int Score = 0;
 		ArrayList<Integer> Scores = new ArrayList<>();
-		if (node.childrenCount == 0){
-			if (setup.detectWin()){
+		if (node.childrenCount == -1){
+			if (! setup.detectWin()){
 				return 0;
 			}
 			else{
@@ -57,5 +57,28 @@ public class Minimax {
 			}
 		}
 		return Score;
+	}
+	public Game best_move(Game setup){
+		HashMap<Integer, Integer> moves = new HashMap<>();
+		for (int i = 0; i < tree.childrenCount; i++){
+			moves.put(i, Traverse(tree.tree.get(tree.children[i]), setup));
+		}
+		Game final_move = new Game();
+		for (int i = 0; i < moves.size(); i++){
+			if (moves.get(i) == 1){
+				final_move = new Game(tree.children[i].Xboard, tree.children[i].Oboard, tree.children[i].turn);
+			}
+		}
+		for (int i = 0; i < moves.size(); i++){
+			if (moves.get(i) == 0){
+				final_move = new Game(tree.children[i].Xboard, tree.children[i].Oboard, tree.children[i].turn);
+			}
+		}
+		for (int i = 0; i < moves.size(); i++){
+			if (moves.get(i) == -1){
+				final_move = new Game(tree.children[i].Xboard, tree.children[i].Oboard, tree.children[i].turn);
+			}
+		}
+		return final_move;
 	}
 }
