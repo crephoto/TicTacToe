@@ -65,7 +65,7 @@ public class Minimax {
 	}
 	public Game best_move(Game setup){
 		HashMap<Integer, Integer> moves = new HashMap<>();
-		for (int i = 0; i < tree.childrenCount; i++){
+		for (int i = 0; i <= tree.childrenCount; i++){
 			moves.put(i, Traverse(tree.tree.get(tree.children[i]), tree.children[i]));
 		}
 		Game final_move = new Game();
