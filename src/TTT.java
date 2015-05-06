@@ -6,10 +6,11 @@
 public class TTT {
 
 	public static void main(String[] args) {
-		Game board = new Game(0b100001010, 0b010000000);
+		Game board = new Game();
 		board.Render();
-		Minimax search = new Minimax();
-		search.buildTree(board);
+		Minimax brain = new Minimax();
+		brain.Search(board, brain.tree);
+		System.out.println(board.legal_moves());
 		
 
 	}

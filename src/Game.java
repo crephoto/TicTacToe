@@ -1,18 +1,20 @@
+import java.util.*;
 
-public class Game {
+public class Game implements Cloneable{
 	public int Xboard;
 	public int Oboard;
 	public int board[] = new int[9];
 	private int wins[] = new int[8];
-	private boolean turn = true;
+	public boolean turn = true;
 	public Game(){
 		Xboard  = 0b000000000;
 		Oboard  = 0b000000000;
 		Init();
 	}
-	public Game(int X, int O){
+	public Game(int X, int O, boolean T){
 		Xboard = X;
 		Oboard = O;
+		turn   = T;
 		Init();
 	}
 	public void Init(){
@@ -69,7 +71,16 @@ public class Game {
 		return ~(Xboard | Oboard);
 		
 	}
-	public boolean detectWin(){ // probably could do this by pattern matching for speed, but im lazy
+	public ArrayList<Integer> legal_moves(){ // TODO speed this up
+		ArrayList<Integer> elements = new ArrayList<>();
+		for (int i = 0; i <= 8; i++){
+			if (((board[i] & Oboard) != board[i]) && ((board[i] & Xboard) != board[i])){
+				elements.add(i);
+			}
+		}
+		return elements;
+	}
+	public boolean detectWin(){
 		for (int i = 0; i < 8; i++){
 			if ((Xboard & wins[i]) == wins[i]){
 				return true;
@@ -80,4 +91,7 @@ public class Game {
 		}
 		return false;
 	}
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }
