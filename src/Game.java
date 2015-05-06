@@ -91,6 +91,14 @@ public class Game implements Cloneable{
 		}
 		return false;
 	}
+	public boolean XWins(){
+		for (int i = 0; i < 8; i++){
+			if ((Xboard & wins[i]) == wins[i]){
+				return true;
+			}
+		}
+		return false;
+	}
     protected Object clone() throws CloneNotSupportedException {
         return super.clone();
     }

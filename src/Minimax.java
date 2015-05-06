@@ -25,4 +25,37 @@ public class Minimax {
 			}
 		}
 	}
+	public int Traverse(Tree node, Game setup){
+		int Score = 0;
+		ArrayList<Integer> Scores = new ArrayList<>();
+		if (node.childrenCount == 0){
+			if (setup.detectWin()){
+				return 0;
+			}
+			else{
+				if (setup.XWins()){
+					return 1;
+				}
+				else{
+					return -1;
+				}
+			}
+		}
+		for (int i = 0; i < node.childrenCount; i++){
+			Scores.add(Traverse(node.tree.get(node.children[i]), node.children[i]));
+		}
+		for (int i = 0; i < Scores.size(); i++){
+			if (setup.turn){
+				if (Scores.get(i) > Score){
+					Score = Scores.get(i);
+				}
+			}
+			else {
+				if (Scores.get(i) < Score){
+					Score = Scores.get(i);
+				}
+			}
+		}
+		return Score;
+	}
 }
