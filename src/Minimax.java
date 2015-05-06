@@ -1,8 +1,12 @@
 import java.util.*;
 
 public class Minimax {
-	Tree tree = new Tree();
-	int count = 0;
+	Tree tree;
+	int count;
+	public Minimax(){
+		tree = new Tree();
+		count = 0;
+	}
 	public void Search(Game position, Tree current_tree){
 		ArrayList<Integer> gen = position.legal_moves();
 		for (int i = 0; i < gen.size(); i++){
@@ -30,6 +34,7 @@ public class Minimax {
 		ArrayList<Integer> Scores = new ArrayList<>();
 		if (node.childrenCount == -1){
 			if (! setup.detectWin()){
+				System.out.println("No kids");
 				return 0;
 			}
 			else{
@@ -61,11 +66,11 @@ public class Minimax {
 	public Game best_move(Game setup){
 		HashMap<Integer, Integer> moves = new HashMap<>();
 		for (int i = 0; i < tree.childrenCount; i++){
-			moves.put(i, Traverse(tree.tree.get(tree.children[i]), setup));
+			moves.put(i, Traverse(tree.tree.get(tree.children[i]), tree.children[i]));
 		}
 		Game final_move = new Game();
 		for (int i = 0; i < moves.size(); i++){
-			if (moves.get(i) == 1){
+			if (moves.get(i) == -1){
 				final_move = new Game(tree.children[i].Xboard, tree.children[i].Oboard, tree.children[i].turn);
 			}
 		}
@@ -75,7 +80,7 @@ public class Minimax {
 			}
 		}
 		for (int i = 0; i < moves.size(); i++){
-			if (moves.get(i) == -1){
+			if (moves.get(i) == 1){
 				final_move = new Game(tree.children[i].Xboard, tree.children[i].Oboard, tree.children[i].turn);
 			}
 		}
