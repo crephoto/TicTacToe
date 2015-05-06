@@ -9,15 +9,19 @@ public class Minimax {
 			Game next_move = new Game(position.Xboard, position.Oboard, position.turn);
 			next_move.Move(gen.get(i));
 			current_tree.addChild(next_move);
-			count += 1;
-			System.out.println(count);
+//			next_move.Render();
+			
 //			try {
-//				Thread.sleep(5000);
+//				Thread.sleep(500);
 //			} catch(InterruptedException ex) {
 //				Thread.currentThread().interrupt();
 //			}
 			if (! next_move.detectWin()){
 				Search(next_move, current_tree.tree.get(next_move));
+			}
+			if (next_move.detectWin() || next_move.legal_moves().size() == 0){
+				count += 1;
+				System.out.println(count);
 			}
 		}
 	}
